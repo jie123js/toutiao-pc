@@ -8,16 +8,17 @@
           'el-icon-s-unfold':isCollapse
          } "
       ></i>
-      <span>啊杰有限公司</span>
+      <span>杰伦有限公司</span>
     </div>
     <el-dropdown>
-      <div class="avatar-wrap">
+      <div class="avatar-wrap" >
         <img
           class="avatar"
-          src="https://img2.baidu.com/it/u=676154522,3786938767&fm=11&fmt=auto&gp=0.jpg"
+          :src=user.photo
+
           alt=""
         />
-        <span>用户昵称</span>
+        <span>{{user.name+ '杰宝'}}</span>
         <i class="el-icon-arrow-down el-icon--right"></i>
       </div>
       <el-dropdown-menu slot="dropdown">
@@ -39,19 +40,33 @@ export default {
     }
   },
   data () {
-    return {}
+    return {
+      user: {}
+    }
   },
   computed: {},
   watch: {},
   created () {
     this.getData()
   },
-  mounted () {},
+  mounted () {
+    // this.$bus.$on('updata', (img) => {
+    //   this.user.photo = img
+    // })
+    this.$bus.$on('upuser', (data) => {
+      this.user.name = data.name
+      this.user.photo = data.photo
+    })
+  },
   methods: {
+    updateData () {
+
+    },
     async getData () {
       try {
         const result = await loginData()
         console.log(result)
+        this.user = result.data.data
       } catch (error) {}
     },
     change () {

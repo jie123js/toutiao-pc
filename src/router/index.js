@@ -4,6 +4,11 @@ import Login from '@/views/login/login.vue'
 import Home from '@/views/home/index.vue'
 import Layout from '@/views/layout/index.vue'
 import Article from '@/views/article/index.vue'
+import Publish from '@/views/publish/index.vue'
+import Images from '@/views/images/index.vue'
+import Comment from '@/views/comment/index.vue'
+import Setting from '@/views/setting/index.vue'
+import Fans from '@/views/fans/index.vue'
 import NProgress from 'nprogress'
 Vue.use(VueRouter)
 
@@ -29,7 +34,33 @@ const routes = [
         path: 'article', // 不写path默认显示这个子路由
         name: 'article',
         component: Article
+      },
+      {
+        path: 'publish', // 不写path默认显示这个子路由
+        name: 'publish',
+        component: Publish
+      },
+      {
+        path: 'image', // 不写path默认显示这个子路由
+        name: 'image',
+        component: Images
+      },
+      {
+        path: 'comment', // 不写path默认显示这个子路由
+        name: 'comment',
+        component: Comment
+      },
+      {
+        path: 'settings', // 不写path默认显示这个子路由
+        name: 'settings',
+        component: Setting
+      },
+      {
+        path: 'fans', // 不写path默认显示这个子路由
+        name: 'fans',
+        component: Fans
       }
+
     ]
   }
 
@@ -61,7 +92,7 @@ router.beforeEach((to, from, next) => {
 })
 router.afterEach((to, from) => {
   // 结束顶部的导航进度条
-  console.log(22)
+
   NProgress.done()
 })
 export default router
