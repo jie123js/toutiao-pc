@@ -13,7 +13,12 @@
         <el-form-item label="标题" prop="title">
           <el-input v-model="article.title"></el-input>
         </el-form-item>
-       <el-tiptap v-model="article.content" :extensions="extensions" height="250px" lang="zh"></el-tiptap>
+        <el-tiptap
+          v-model="article.content"
+          :extensions="extensions"
+          height="250px"
+          lang="zh"
+        ></el-tiptap>
         <el-form-item label="封面">
           <el-radio-group v-model="article.cover.type">
             <el-radio :label="1">单图</el-radio>
@@ -21,6 +26,17 @@
             <el-radio :label="0">无图</el-radio>
             <el-radio :label="-1">自动</el-radio>
           </el-radio-group>
+          <template v-if="article.cover.type > 0">
+            <image-select
+              v-for="(item, index) in article.cover.type"
+              :key="item"
+              v-model="article.cover.images[index]"
+
+            ></image-select>
+          </template>
+          <!-- <template v-if="article.cover.type>0">
+           <image-select v-for="(item,index) in article.cover.type" :key="item" @updataimg=changeData(index,$event) :newimg=article.cover.images[index]></image-select>
+          </template> -->
         </el-form-item>
         <el-form-item label="频道" prop="channel_id">
           <el-select v-model="article.channel_id" placeholder="请选择频道">
@@ -43,6 +59,7 @@
 
 <script>
 import { uploadImage } from '@/api/image.js'
+import ImageSelect from './components/ImageSelect.vue'
 import {
   ElementTiptap,
   Doc,
@@ -74,7 +91,8 @@ import {
 export default {
   name: 'PublishIndex',
   components: {
-    'el-tiptap': ElementTiptap
+    'el-tiptap': ElementTiptap,
+    ImageSelect
   },
   props: {},
   data () {
@@ -158,6 +176,9 @@ export default {
   },
   mounted () {},
   methods: {
+    changeData (i, url) {
+      this.article.cover.images[i] = url
+    },
     async onSubmit (draft) {
       this.$refs.form.validate(async (valid) => {
         console.log(valid)
