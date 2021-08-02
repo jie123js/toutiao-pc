@@ -11,7 +11,7 @@
       :before-close="handleClose"
     >
       <el-tabs v-model="activeName" >
-    <el-tab-pane label="图片选择" name="first">图片选择</el-tab-pane>
+    <el-tab-pane label="图片选择" name="first"><select-img :isSelect=true ref="imgUP"></select-img></el-tab-pane>
     <el-tab-pane label="上传图片" name="second">
 
         <input type="file" ref="imgfile" @change="selectImg" />
@@ -32,10 +32,16 @@
 
 <script>
 import { uploadImage } from '@/api/image.js'
+import selectImg from '@/components/select.vue'
+
 export default {
   name: 'ImageSelect',
   // props: ['newimg'],
   props: ['value'],
+  components: {
+    selectImg
+
+  },
   data () {
     return {
       imgData: '',
@@ -59,6 +65,15 @@ export default {
           this.$refs.imgbox.src = res.data.data.url
           this.$emit('input', res.data.data.url)
         })
+      }
+      if (this.activeName === 'first') {
+        console.log(11)
+        const index = this.$refs.imgUP.selinx
+        console.log(index)
+        const data = this.$refs.imgUP.imgList[index]
+        console.log(data)
+        // this.$refs.imgbox.src = data.url
+        this.$emit('input', data.url)
       }
       this.dialogVisible = false
     },
